@@ -294,7 +294,8 @@
     (cond ((<= l 8)  (uint8  n))
 	  ((<= l 16) (uint16 n))
 	  ((<= l 32) (uint32 n))
-	  (else      (uint64 n)))))
+          ((<= l 64) (uint64 n))
+	  (else      (uint128 n)))))
 
 (define (sized-uint-oct-literal n s)
   (if (eqv? (string.char s 2) #\0)
@@ -302,7 +303,8 @@
     (cond ((< n 256)        (uint8  n))
 	  ((< n 65536)      (uint16 n))
 	  ((< n 4294967296) (uint32 n))
-	  (else             (uint64 n)))))
+          ((< n 18446744073709551616 (uint64 n))
+	  (else             (uint128 n)))))
 
 (define (skip-ws-and-comments port)
   (skip-ws port #t)
